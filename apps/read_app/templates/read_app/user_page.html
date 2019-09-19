@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>User Reviews</title>
+    <style>
+        .container {
+            padding-top: 30px;
+        }
+
+        .header {
+            border-bottom: 1px solid black;
+            margin-bottom: 20px;
+        }
+
+        a {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row header">
+            <div class="col">
+                <h4>Welcome {{request.session.alias}}!</h4>
+            </div>
+            <div class="col text-right">
+                <a href="/books">Home</a>
+                <a href="/books/add">Add Books and Review</a>
+                <a href="/logout">Log Out</a>
+            </div>
+        </div>
+        <p class="user_email">User ID: {{request.session.email}}</p>
+        <div class="user_page">
+            <h5>User Alias: {{this_user.alias}}</h5>
+            <p>Name: {{this_user.name}}</p>
+            <p>Email: {{this_user.email_address}}</p>
+            <p>Total Review: {{this_user.reviews.count}}</p>
+        </div>
+        <p>Posted Reviews on the following books:</p>
+        <ul>
+            {% for v in this_user.books.all %}
+            <li><a href="/books/{{v.id}}">{{v.title}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+
+</html>

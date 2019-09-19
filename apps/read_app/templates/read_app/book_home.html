@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Books Home</title>
+    <style>
+        .container {
+            padding-top: 50px;
+        }
+
+        .header {
+            border-bottom: 1px solid black;
+        }
+
+        .box {
+            width: 200px;
+            height: 150px;
+            overflow-y: scroll;
+            border: 1px solid black;
+        }
+
+        a {
+            text-decoration: underline;
+        }
+
+        .book_title {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row header">
+            <div class="col">
+                <h4>Welcome {{request.session.alias}}!</h4>
+            </div>
+            <div class="col text-right">
+                <a href="/books/add">Add Books and Review</a>
+                <a href="/logout">Log Out</a>
+            </div>
+        </div>
+        <p class="user_email">User ID: {{request.session.email}}</p>
+        <div class="row">
+            <div class="col">
+                <h4>Recent Book Reviews:</h4>
+                {% for v in latest_three_reviews %}
+                <a href="/books/{{v.book.id}}" class="book_title">{{v.book.title}}</a>
+                <p>Rating: {{v.rating}}</p>
+                <p><a href="/users/{{v.user.id}}">{{v.user.alias}}</a> says: {{v.review}}</p>
+                <p>Posted on {{v.created_at}}</p>
+                {% endfor %}
+            </div>
+            <div class="col">
+                <h4>Other Books with Reviews:</h4>
+                <div class="box">
+                    {% for x in all_books %}
+                    <p><a href="/books/{{x.id}}">{{x.title}}</a></p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
